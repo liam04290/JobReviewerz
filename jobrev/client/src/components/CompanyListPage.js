@@ -20,7 +20,7 @@ function CompanyListPage() {
 
   const handleLogout = () => {
     // Logout Logic
-    navigate('/login');
+    navigate('/');
   };
 
   const filteredCompanies = data?.companies.filter(company => 

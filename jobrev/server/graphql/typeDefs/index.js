@@ -9,6 +9,8 @@ type User {
   name: String!
   email: String!
   password: String! 
+  companies: [Company]
+  reviews: [Review]
 }
 
 type Auth {
@@ -36,7 +38,9 @@ type Company {
   _id: ID!
   name: String!
   description: String!
+  user: User!
   reviews: [Review]
+  rating: Float
 }
 
 extend type Mutation {
@@ -52,6 +56,7 @@ type Review {
   reviewText: String!
   rating: Int!
   createdAt: String
+  user: User!
   company: Company
 }
 

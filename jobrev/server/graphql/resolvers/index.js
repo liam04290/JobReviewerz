@@ -16,11 +16,27 @@ const resolvers = {
         },
         // Fetch all companies
         companies: async () => {
-            return Company.find({});
+            const companies = await Company.find({}).populate('reviews');
+
+            // Compute average ratings for each company
+            companies.forEach(company => {
+                if (company.reviews.length) {
+                    let totalRating = 0;
+                    company.reviews.forEach(review => {
+                        totalRating += review.rating;
+                    });
+                    company.rating = totalRating / company.reviews.length;
+                } else {
+                    company.rating = 0;
+                }
+            });
+
+            return companies;
         },
+
         // Fetch single company by ID and populate associated reviews
         company: async (_, { companyId }) => {
-            return Company.findById(companyId).populate('reviews');
+            return Company.findById(companyId).populate('reviews').populate('user');
         }
     },
 
@@ -50,10 +66,14 @@ const resolvers = {
             return { token, user };
         },
         // Create and return new company
-        addCompany: async (_, { name, description }) => {
-            const company = await Company.create({ name, description });
-            return company;
+        addCompany: async (_, { name, description }, context) => {
+            if (context.user) {
+                const company = await Company.create({ name, description, user: context.user._id });
+                return company;
+            }
+            throw new AuthenticationError('You need to be logged in to add a company!');
         },
+
         // Create new review for a company by ID
         // Requires authenticated user
         addReview: async (_, { companyId, reviewText, rating }, context) => {
@@ -62,11 +82,9 @@ const resolvers = {
                     reviewText,
                     rating,
                     companyId,
-                    // Assign review to user
-                    reviewer: context.user._id
+                    user: context.user._id
                 });
 
-                // Update company to include new review's ID
                 await Company.findByIdAndUpdate(
                     companyId,
                     { $push: { reviews: review._id } },
@@ -77,6 +95,7 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in to post a review!');
         }
+
     }
 };
 
