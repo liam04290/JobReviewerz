@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {gql} from '@apollo/client';
 import '../styles/addcompanypage.css';
+import { useNavigate } from 'react-router-dom';
 
 export const ADD_COMPANY = gql`
   mutation AddCompany($name: String!, $description: String!) {
@@ -13,13 +14,25 @@ export const ADD_COMPANY = gql`
   }
 `;
 
+const GET_COMPANIES = gql`
+  query GetCompanies {
+    companies {
+      _id
+      name
+      rating
+    }
+  }
+`;
+
 const AddCompanyPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: ''
   });
 
-  const [addCompany] = useMutation(ADD_COMPANY);
+  const [addCompany] = useMutation(ADD_COMPANY, {
+    refetchQueries: [{ query: GET_COMPANIES }]
+  });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -29,6 +42,7 @@ const AddCompanyPage = () => {
     }));
   };
 
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -38,6 +52,7 @@ const AddCompanyPage = () => {
       alert('Company added successfully!');
       
       setFormData({ name: '', description: '' });
+      navigate('/companies');
     } catch (error) {
       alert('Error adding company!');
       console.error(error);

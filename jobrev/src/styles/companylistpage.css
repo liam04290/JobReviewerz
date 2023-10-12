@@ -30,7 +30,11 @@
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 12px;
+  }
+
+  .company-btn:hover {
+    background-color: #0077b6;
   }
   
   button {
@@ -48,4 +52,27 @@
     width: 100%;
     box-sizing: border-box;
   }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .profile-btn {
+    background-color: #007BFF;
+
+    padding: 8px 16px;
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .profile-btn:hover {
+    background-color: #007BFF;
+    background-color: #0077b6;    
+
+  }
+  
   

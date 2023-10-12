@@ -23,7 +23,10 @@ function CompanyListPage() {
 
   return (
     <div className="company-list-container">
-      <h2>Company Reviews</h2>
+      <div className="header">
+        <h2>Company Reviews</h2>
+        <Link to="/profile" className="profile-btn">Profile</Link>
+      </div>
 
       <input 
         type="text" 
@@ -38,7 +41,7 @@ function CompanyListPage() {
         {filteredCompanies.map(company => (
           <Link key={company._id} to={`/company/${company._id}`} className="company-card">
             <span>{company.name}</span>
-            <span>{company.rating} ⭐</span>
+            <span>-   Rating: {Math.round(company.rating * 100)/100}⭐'s</span>
           </Link>
         ))}
       </div>

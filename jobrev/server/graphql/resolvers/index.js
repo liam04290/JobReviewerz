@@ -25,7 +25,7 @@ const resolvers = {
                     company.reviews.forEach(review => {
                         totalRating += review.rating;
                     });
-                    company.rating = totalRating / company.reviews.length;
+                    company.rating = parseFloat((totalRating / company.reviews.length).toFixed(2));
                 } else {
                     company.rating = 0;
                 }
