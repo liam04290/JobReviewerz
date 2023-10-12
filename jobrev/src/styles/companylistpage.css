@@ -20,7 +20,7 @@
     color: black;
   }
   
-  .add-company-btn {
+  .company-btn {
     margin-top: 15px;
     padding: 10px 15px;
     background-color: #007BFF;
@@ -30,6 +30,7 @@
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
+    border-radius: 6px;
   }
   
   button {

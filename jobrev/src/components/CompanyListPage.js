@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../styles/companylistpage.css'
 
 const GET_COMPANIES = gql`
@@ -16,12 +16,6 @@ const GET_COMPANIES = gql`
 function CompanyListPage() {
   const { loading, error, data } = useQuery(GET_COMPANIES);
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Logout Logic
-    navigate('/');
-  };
 
   const filteredCompanies = data?.companies.filter(company => 
     company.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -49,8 +43,8 @@ function CompanyListPage() {
         ))}
       </div>
 
-      <button onClick={handleLogout}>Logout</button>
-      <Link to="/add-company" className="add-company-btn">Add Company</Link>
+      <Link to="/" className="company-btn">Logout</Link>
+      <Link to="/add-company" className="company-btn">Add Company</Link>
     </div>
   );
 }
