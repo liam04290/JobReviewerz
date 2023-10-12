@@ -54,8 +54,8 @@ async function seedDatabase() {
 
     // Review data
     const reviewsData = [
-        { reviewText: 'Did not vibe.', rating: 2, companyId: insertedCompanies[0]._id, reviewer: insertedUsers[0]._id },
-        { reviewText: 'Vibed.', rating: 5, companyId: insertedCompanies[1]._id, reviewer: insertedUsers[1]._id },
+        { reviewText: 'Did not vibe.', rating: 2, company: insertedCompanies[0]._id, user: insertedUsers[0]._id },
+        { reviewText: 'Vibed.', rating: 5, company: insertedCompanies[1]._id, user: insertedUsers[1]._id },
     ];
 
     await Review.insertMany(reviewsData);
